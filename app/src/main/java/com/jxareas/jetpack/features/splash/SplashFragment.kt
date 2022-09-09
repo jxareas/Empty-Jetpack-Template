@@ -1,34 +1,37 @@
 package com.jxareas.jetpack.features.splash
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.jxareas.jetpack.R
-import com.jxareas.jetpack.databinding.FragmentSplashBinding
+import com.jxareas.jetpack.SplashGraphDirections
+import com.jxareas.jetpack.core.data.AuthenticationManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class SplashFragment : Fragment() {
+class SplashFragment :  Fragment(R.layout.fragment_splash) {
+    @Inject
+    lateinit var authenticationManager: AuthenticationManager
 
-    private var _binding: FragmentSplashBinding? = null
-    private val binding: FragmentSplashBinding
-        get() = _binding!!
+    private val handler = Handler()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentSplashBinding.inflate(inflater, container, false)
-        return binding.root
+    private val finishSplash: Runnable = Runnable {
+        if (authenticationManager.isAuthenticated()) {
+            Navigation.findNavController(requireView())
+                .navigate(SplashGraphDirections.splashToLoggedIn(authenticationManager.getAuthenticatedUser()))
+        } else {
+            Navigation.findNavController(requireView()).navigate(R.id.splash_to_logged_out)
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun onStart() {
+        super.onStart()
+        handler.postDelayed(finishSplash, 1L)
     }
 
+    override fun onStop() {
+        handler.removeCallbacks(finishSplash)
+        super.onStop()
+    }
 }
