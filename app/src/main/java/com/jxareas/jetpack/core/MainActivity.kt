@@ -1,7 +1,8 @@
-package com.jxareas.jetpack
+package com.jxareas.jetpack.core
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jxareas.jetpack.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
