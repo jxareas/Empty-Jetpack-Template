@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">jetpack</string>
+    <string name="app_name">Jetpack</string>
+    <string name="authenticate_me">Authenticate Me</string>
 </resources>
