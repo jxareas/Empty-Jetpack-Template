@@ -80,8 +80,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
 
     // Dagger-Hilt
-    implementation "com.google.dagger:hilt-android:$dagger_hilt"
-    kapt "com.google.dagger:hilt-compiler:$dagger_hilt"
+    implementation 'com.google.dagger:hilt-android:2.43.2'
+    kapt 'com.google.dagger:hilt-compiler:2.43.2'
+//    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     // Data Store
     implementation "androidx.datastore:datastore:$data_store_version"
